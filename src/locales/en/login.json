@@ -1,0 +1,17 @@
+{
+  "title": "LOGIN",
+  "email": {
+    "placeholder": "Enter your email",
+    "required": "Email is required",
+    "invalid": "Invalid email address",
+    "invalidEmailOrPassword": "Email or password is incorrect"
+  },
+  "password": {
+    "placeholder": "Enter your password",
+    "required": "Password is required",
+    "minLength": "Password must be at least 6 characters"
+  },
+  "submit": "Sign In",
+  "forgotPassword": "Forgot Password?",
+  "register": "Create new account"
+}

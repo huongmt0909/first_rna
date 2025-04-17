@@ -1,0 +1,14 @@
+{
+  "formControl": {
+    "validation": {
+      "required": "This field is required",
+      "email": "Invalid email address",
+      "minLength": "Minimum {{length}} characters required",
+      "maxLength": "Maximum {{length}} characters allowed",
+      "password": {
+        "minLength": "Password must be at least 6 characters",
+        "pattern": "Password must contain at least one letter and one number"
+      }
+    }
+  }
+}
