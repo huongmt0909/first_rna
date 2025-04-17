@@ -57,20 +57,26 @@ class HttpService {
     this.axiosInstance.interceptors.response.use(
       // Success handler - returns only the response data
       async (response: any) => {
-        console.log('Response:', {
-          status: response.status,
-          data: response.data,
-          headers: response.headers,
-        });
+        if (__DEV__) {
+          console.log('Response:', {
+            status: response.status,
+            data: response.data,
+            headers: response.headers,
+          });
+        }
         await AsyncStorage.setItem('headers', JSON.stringify(response.headers));
         return response.data;
       },
       // Error handler - processes HTTP errors
       async (error: any) => {
-        console.log('Error:', {
-          status: error.response?.status,
-          message: error.response?.data,
-        });
+        if (__DEV__) {
+          console.log('Error Response:', {
+            status: error.response?.status,
+            statusText: error.response?.statusText,
+            data: error.response?.data,
+            headers: error.response?.headers,
+          });
+        }
         const status = error.response?.status;
         switch (status) {
           // Handle 404 and 500 errors
