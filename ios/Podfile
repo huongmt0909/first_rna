@@ -1,9 +1,6 @@
-# Resolve react_native_pods.rb with node to allow for hoisting
-require Pod::Executable.execute_command('node', ['-p',
-  'require.resolve(
-    "react-native/scripts/react_native_pods.rb",
-    {paths: [process.argv[1]]},
-  )', __dir__]).strip
+require_relative '../node_modules/react-native/scripts/react_native_pods'
+require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
+require_relative '../node_modules/react-native-config/ios/ReactNativeConfig/ReactNativeConfig.rb'
 
 platform :ios, min_ios_version_supported
 prepare_react_native_project!
@@ -14,22 +11,36 @@ if linkage != nil
   use_frameworks! :linkage => linkage.to_sym
 end
 
-target 'firstRNA' do
+# Nếu bạn muốn sử dụng nhiều target khác nhau cho dev và prod
+abstract_target 'App' do
   config = use_native_modules!
 
   use_react_native!(
     :path => config[:reactNativePath],
-    # An absolute path to your application root.
-    :app_path => "#{Pod::Config.instance.installation_root}/.."
+    :hermes_enabled => flags[:hermes_enabled],
+    :fabric_enabled => flags[:fabric_enabled],
+    :flipper_configuration => FlipperConfiguration.enabled,
   )
 
-  post_install do |installer|
-    # https://github.com/facebook/react-native/blob/main/packages/react-native/scripts/react_native_pods.rb#L197-L202
-    react_native_post_install(
-      installer,
-      config[:reactNativePath],
-      :mac_catalyst_enabled => false,
-      # :ccache_enabled => true
-    )
+  pod 'react-native-config', :path => '../node_modules/react-native-config'
+
+  target 'FirstRna' do
+    # Development target
+    target 'FirstRna-Development' do
+      inherit! :complete
+    end
+
+    # Production target
+    target 'FirstRna-Production' do
+      inherit! :complete
+    end
   end
+end
+
+post_install do |installer|
+  react_native_post_install(
+    installer,
+    :mac_catalyst_enabled => false
+  )
+  __apply_Xcode_12_5_M1_post_install_workaround(installer)
 end
