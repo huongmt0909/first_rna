@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import BottomTabs from './components/common/BottomTabs';
 import LoginScreen from './screens/Login';
+import {ROUTES} from './constants/routes';
 
 const Stack = createNativeStackNavigator();
 
@@ -19,9 +20,9 @@ function App(): React.JSX.Element {
       <View style={styles.container}>
         <NavigationContainer>
           <Stack.Navigator screenOptions={{headerShown: false}}>
-            <Stack.Screen name="MainTabs" component={BottomTabs} />
+            <Stack.Screen name={ROUTES.MAIN_TABS} component={BottomTabs} />
 
-            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name={ROUTES.LOGIN} component={LoginScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </View>

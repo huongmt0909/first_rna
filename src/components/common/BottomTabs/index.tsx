@@ -3,6 +3,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import HomeScreen from '../../../screens/Home';
 import ProfileScreen from '../../../screens/Profile';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {ROUTES} from '../../../constants/routes';
 
 const Tab = createBottomTabNavigator();
 
@@ -14,7 +15,7 @@ const TabBarIcon = ({
   routeName: string;
 }) => {
   const iconName =
-    routeName === 'Home'
+    routeName === ROUTES.HOME
       ? focused
         ? 'home'
         : 'home-outline'
@@ -35,8 +36,8 @@ const screenOptions = ({route}: any) => ({
 const BottomTabs = () => {
   return (
     <Tab.Navigator screenOptions={screenOptions}>
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Profile" component={ProfileScreen} />
+      <Tab.Screen name={ROUTES.HOME} component={HomeScreen} />
+      <Tab.Screen name={ROUTES.PROFILE} component={ProfileScreen} />
     </Tab.Navigator>
   );
 };

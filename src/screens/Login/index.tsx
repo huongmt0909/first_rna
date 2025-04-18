@@ -10,6 +10,7 @@ import FormControl from '../../components/common/FormControl';
 import useMutation from '../../hooks/useMutation';
 import {API_URL} from '../../constants/api';
 import Loading from '../../components/common/Loading';
+import {ROUTES} from '../../constants/routes';
 
 type FormData = {
   email: string;
@@ -27,7 +28,7 @@ const LoginScreen = () => {
       url: API_URL.LOGIN,
       payload: {email: data.email, password: data.password, type: 'email'},
       onSuccess: () => {
-        navigation.navigate('MainTabs' as never);
+        navigation.navigate(ROUTES.MAIN_TABS as never);
       },
     });
   };
